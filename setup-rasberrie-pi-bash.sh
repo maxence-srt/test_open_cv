@@ -2,10 +2,10 @@
 sudo apt update && sudo apt upgrade -y
 
 # 2. Install system dependencies for OpenCV, matplotlib, and Jupyter
-sudo apt install -y python3-pip python3-venv libatlas-base-dev libjpeg-dev zlib1g-dev
+#    (libatlas-base-dev removed & replaced with libopenblas-dev)
+sudo apt install -y python3-pip python3-venv libopenblas-dev libjpeg-dev zlib1g-dev
 
-# 3. Create a directory for the virtual environment (e.g., on external USB drive if needed)
-#    Change the path if you want to use external storage.
+# 3. Create a directory for the virtual environment
 mkdir -p ~/my_vision_env
 cd ~/my_vision_env
 
@@ -16,7 +16,6 @@ python3 -m venv venv
 source venv/bin/activate
 
 # 6. Increase the temporary space limit by redirecting pip's temp folder
-#    ( /tmp is only 2 GB, so we use the venv folder which has more room )
 export TMPDIR=~/my_vision_env/tmp
 mkdir -p $TMPDIR
 
@@ -24,12 +23,6 @@ mkdir -p $TMPDIR
 pip install --upgrade pip setuptools wheel
 
 # 8. Install the required Python libraries
-#    - opencv-python (pre‑compiled for ARM)
-#    - matplotlib
-#    - ultralytics (includes YOLO, pulls torch and torchvision)
-#    - dronekit-python
-#    - jupyter
-
 pip install opencv-python
 pip install matplotlib
 pip install ultralytics
@@ -43,5 +36,4 @@ python -c "import ultralytics; print('Ultralytics version:', ultralytics.__versi
 python -c "import dronekit; print('DroneKit version:', dronekit.__version__)"
 
 # 10. Launch Jupyter Notebook
-#     It will open in your browser at http://localhost:8888
 jupyter notebook
