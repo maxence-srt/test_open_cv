@@ -49,6 +49,16 @@ def shrink_box(ymin, xmin, ymax, xmax, factor=0.5):
     new_h = (ymax - ymin) * factor
     return (center_y - new_h/2, center_x - new_w/2,
             center_y + new_h/2, center_x + new_w/2)
+def where_located(ymin, xmin, ymax, xmax,img_h, img_w):
+    if ymax<(img_h/2):
+        print([0,0,0])
+    if xmin>(img_w/2):
+        print([1,0,0])
+    if xmax<(img_w/2):
+        print([0,0,1])
+    else:
+        print([0,0,1)]
+    
 
 def main():
     print("Loading model...")
@@ -84,6 +94,7 @@ def main():
             x2 = int(new_xmax * img_w)
             y1 = int(new_ymin * img_h)
             y2 = int(new_ymax * img_h)
+            cv2.circle(frame, (img_w/2, img_h/2), radius=1, color=(0, 255, 0), thickness=-2)
 
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
             cv2.putText(frame, f"person {score:.2f}", (x1, y1 - 10),
